@@ -14,7 +14,7 @@ app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
   }))
 app.use(helmet())
 app.use(cors())
-app.use('/articles', articlesRouter)
+app.use('/api/articles', articlesRouter)
 
 app.use('/api/users', usersRouter)
 

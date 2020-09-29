@@ -1,5 +1,6 @@
 const express = require('express')
 const xss = require('xss')
+const path = require('path')
 const ArticlesService = require('./articles-service')
 
 const articlesRouter = express.Router()
@@ -43,7 +44,7 @@ articlesRouter
       .then(article => {
         res
           .status(201)
-          .location(`/articles/${article.id}`)
+          .location(path.posix.join(req.originalUrl, `/${article.id}`))
           .json(serializeArticle(article))
       })
       .catch(next)
