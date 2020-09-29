@@ -52,7 +52,7 @@ articlesRouter
 
 articlesRouter
   .route('/:article_id')
-  .get((req, res, next) => {
+  .all((req, res, next) => {
     ArticlesService.getById(req.app.get('db'), req.params.article_id)
       .then(article => {
         if (!article) {
@@ -69,6 +69,7 @@ articlesRouter
   .get((req, res, next) => {
     res.json(serializeArticle(res.article))
   })
+
   .delete((req, res, next) => {
     ArticlesService.deleteArticle(
       req.app.get('db'),
