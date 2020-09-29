@@ -5,20 +5,19 @@ const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const usersRouter = require('./users/users-router')
-const articlesRouter = require('./articles-router')
+const articlesRouter = require('./articles/articles-router')
 
 const app = express()
 
-const morganOption = (NODE_ENV === 'production')
-    ? 'tiny'
-    : 'common';
-
-app.use(morgan(morganOption))
+app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
+    skip: () => NODE_ENV === 'test'
+  }))
 app.use(helmet())
 app.use(cors())
 app.use('/articles', articlesRouter)
 
 app.use('/api/users', usersRouter)
+
 app.get('/', (req, res) => {
     res.send('Hello, world!')
 })
